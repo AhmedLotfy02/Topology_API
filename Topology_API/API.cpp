@@ -28,12 +28,12 @@ bool API::ReadJson(string FileName)
 			comp.set_type(jf["components"][i]["type"]);
 
 			if (comp.get_type() == "resistor") {
-				ResistanceClass r;
-				r.set_name("resistance");
+				ResistanceClass *r=new ResistanceClass();
+				r->set_name("resistance");
 				json res = jf["components"][i]["resistance"];
-				r.set_Default(res["default"]);
-				r.set_Min(res["min"]);
-				r.set_Max(res["max"]);
+				r->set_Default(res["default"]);
+				r->set_Min(res["min"]);
+				r->set_Max(res["max"]);
 				json net = jf["components"][i]["netlist"];
 				//cout << net;
 				comp.set_Device(r);
@@ -41,12 +41,12 @@ bool API::ReadJson(string FileName)
 				comps.push_back(comp);
 			}
 			else if (comp.get_type() == "nmos" || comp.get_type() == "pmos") {
-				TransistorClass t;
-				t.set_name("m(l)");
+				TransistorClass* t = new TransistorClass();;
+				t->set_name("m(l)");
 				json res = jf["components"][i]["m(l)"];
-				t.set_Default(res["default"]);
-				t.set_Min(res["min"]);
-				t.set_Max(res["max"]);
+				t->set_Default(res["default"]);
+				t->set_Min(res["min"]);
+				t->set_Max(res["max"]);
 				json net = jf["components"][i]["netlist"];
 				//cout << net;
 				comp.set_Device(t);
@@ -71,8 +71,12 @@ bool API::ReadJson(string FileName)
 
 bool API::writeJSON(string TopologyID)
 {
+	string jsonName;
+	cout << "Please enter the name of the json file you want to create : ";
+	cin >> jsonName;
+	cout << endl;
 	json j;
-	ofstream o("pretty.json");
+	ofstream o(jsonName+".json");
 	//o << std::setw(4) << j << std::endl;
 	Topology topo;
 	for (int i = 0; i < TopologyList.size(); i++) {
@@ -99,9 +103,9 @@ bool API::writeJSON(string TopologyID)
 			o << "\"resistor\",";
 			o << "\"id\":" << "\"" << comps[i].get_id() << "\"," << endl;
 			o << "\"resistance\" : {";
-			o << "\"default\" :" << comps[i].get_Comp_Device().get_Default() << ",";
-			o << "\"min\" :" << comps[i].get_Comp_Device().get_min() << ",";
-			o << "\"max\" :" << comps[i].get_Comp_Device().get_max();
+			o << "\"default\" :" << comps[i].get_Comp_Device()->get_Default() << ",";
+			o << "\"min\" :" << comps[i].get_Comp_Device()->get_min() << ",";
+			o << "\"max\" :" << comps[i].get_Comp_Device()->get_max();
 			o << "},";
 			///////Netlist;
 			o << "\"netlist\": {";
@@ -131,9 +135,9 @@ bool API::writeJSON(string TopologyID)
 			o << "\"" << comps[i].get_type() << "\",";
 			o << "\"id\":" << "\"" << comps[i].get_id() << "\"," << endl;
 			o << "\"m(l)\" : {";
-			o << "\"default\" :" << comps[i].get_Comp_Device().get_Default() << ",";
-			o << "\"min\" :" << comps[i].get_Comp_Device().get_min() << ",";
-			o << "\"max\" :" << comps[i].get_Comp_Device().get_max();
+			o << "\"default\" :" << comps[i].get_Comp_Device()->get_Default() << ",";
+			o << "\"min\" :" << comps[i].get_Comp_Device()->get_min() << ",";
+			o << "\"max\" :" << comps[i].get_Comp_Device()->get_max();
 			o << "},";
 			///////Netlist;
 			o << "\"netlist\": {";
@@ -207,22 +211,49 @@ vector<DeviceClass*> API::queryDevices(string TopologyID)
 	vector<ComponentClass> comps = topo.get_Components();
 	for (int i = 0; i < componentsSize; i++) {
 
-		if (comps[i].get_type() == "resistor") {
-			ResistanceClass *r=new ResistanceClass(comps[i].get_Comp_Device().get_name(), comps[i].get_Comp_Device().get_Default(), comps[i].get_Comp_Device().get_max(), comps[i].get_Comp_Device().get_min());
-			devices.push_back(r);
-		}
-		else if (comps[i].get_type() == "nmos" || comps[i].get_type() == "pmos") {
-			TransistorClass *t=new TransistorClass(comps[i].get_Comp_Device().get_name(), comps[i].get_Comp_Device().get_Default(), comps[i].get_Comp_Device().get_max(), comps[i].get_Comp_Device().get_min());
-			devices.push_back(t);
-		}
-		//devices.push_back(comps[i].get_Comp_Device());
+		devices.push_back(comps[i].get_Comp_Device());
+		
+		
 	}
 	return devices;
 }
 
 vector<DeviceClass*> API::queryDevicesWithNetlistNode(string TopologyID, string NetlistNodeID)
 {
-	return vector<DeviceClass*>();
+	string id = "not found";
+	Topology topo;
+	vector<DeviceClass*> devices;
+	int size = TopologyList.size();
+	for (int i = 0; i < size; i++) {
+		if (TopologyList[i].get_id() == TopologyID) {
+			topo = TopologyList[i];
+			id = "found";
+			break;
+		}
+	}
+	if (id == "not found")
+		return vector<DeviceClass*>();
+	int componentsSize = topo.get_Components().size();
+	vector<ComponentClass> comps = topo.get_Components();
+	for (int i = 0; i < componentsSize; i++) {
+		unordered_map<string, string>netL = comps[i].get_netList();
+		bool connected = false;
+		for (auto it : netL) {
+			if (it.second == NetlistNodeID) {
+				connected = true;
+				break;
+			}
+		}
+		if (connected) {
+
+			devices.push_back(comps[i].get_Comp_Device());
+			
+		}
+
+	}
+	
+
+	return devices;
 }
 
 API::~API()

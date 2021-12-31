@@ -13,6 +13,7 @@ void TransistorClass::Print_Device()
 		
 	cout << "Transistor : " << this->get_name() << endl;
 	DeviceClass::Print_Device();
+	cout<< endl;
 }
 
 TransistorClass::~TransistorClass()

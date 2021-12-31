@@ -45,6 +45,15 @@ vector<ComponentClass>  Topology::get_Components()
 	return this->Components;
 }
 
+void Topology::Print_Topology()
+{
+	cout << "Topology's ID: " << this->get_id()<<endl;
+	for (int i = 0; i < Components.size(); i++) {
+		Components[i].Print_Component();
+		cout << endl<<endl;
+	}
+}
+
 Topology::~Topology()
 {
 }

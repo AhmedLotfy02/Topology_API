@@ -1,6 +1,6 @@
 #include "ComponentClass.h"
 
-ComponentClass::ComponentClass(string typ, string id, DeviceClass d, unordered_map<string, string> netlist)
+ComponentClass::ComponentClass(string typ, string id, DeviceClass *d, unordered_map<string, string> netlist)
 {
 	this->set_Device(d);
 	this->set_id(id);
@@ -23,7 +23,7 @@ void ComponentClass::set_id(string id)
 	this->id = id;
 }
 
-void ComponentClass::set_Device(DeviceClass d)
+void ComponentClass::set_Device(DeviceClass *d)
 {
 	this->Device = d;
 }
@@ -43,7 +43,7 @@ string ComponentClass::get_id()
 	return this->id;
 }
 
-DeviceClass ComponentClass::get_Comp_Device()
+DeviceClass* ComponentClass::get_Comp_Device()
 {
 	return this->Device;
 }
@@ -51,6 +51,17 @@ DeviceClass ComponentClass::get_Comp_Device()
 unordered_map<string, string> ComponentClass::get_netList()
 {
 	return this->netlist;
+}
+
+void ComponentClass::Print_Component()
+{
+	cout << "Component: " << endl;
+	Device->Print_Device();
+	cout << "NetList: " << endl;
+	for (auto it : this->netlist) {
+		cout << it.first << " : " << it.second << endl;
+	}
+	cout << "-------------------------------------------------"<<endl;
 }
 
 ComponentClass::~ComponentClass()

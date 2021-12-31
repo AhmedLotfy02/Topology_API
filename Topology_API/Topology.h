@@ -20,6 +20,7 @@ public:
 	void Add_Component(ComponentClass c);
 	string get_id();
 	vector<ComponentClass> get_Components();
+	void Print_Topology();
 	~Topology();
 };
 
