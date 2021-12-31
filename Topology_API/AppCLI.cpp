@@ -7,7 +7,7 @@ using json = nlohmann::json;
 using namespace std;
 #include <fstream>
 #include <unordered_map>
-
+#include "API_TestingClass.h"
 
 int main() {
 	char Query;
@@ -21,6 +21,7 @@ int main() {
 		cout << "Press 4 to Delete a topology from memory." << endl;
 		cout << "Press 5 to Query about which devices are in a topology." << endl;
 		cout << "Press 6 to Query about which devices are connected to a given netlist node in a given topology" << endl;
+		cout << "Press t for Unit Tests" << endl;
 		cout << "Your Query: ";
 
 		cin >> Query;
@@ -103,6 +104,21 @@ int main() {
 					devices[i]->Print_Device();
 				}
 			}
+		}
+		else if (Query == 't') {
+			API_TestingClass UnitTest;
+			cout << "TESTING QUERY 1 :" << endl;
+			UnitTest.Testing_Query1();
+			cout << "TESTING QUERY 2 :" << endl;
+			UnitTest.Testing_Query2();
+			cout << "TESTING QUERY 3 :" << endl;
+			UnitTest.Testing_Query3();
+			cout << "TESTING QUERY 4 :" << endl;
+			UnitTest.Testing_Query4();
+			cout << "TESTING QUERY 5 :" << endl;
+			UnitTest.Testing_Query5();
+			cout << "TESTING QUERY 6 :" << endl;
+			UnitTest.Testing_Query6();
 		}
 		cout << "Query is Ended" << endl;
 		cout << "--------------------------------------------------------";

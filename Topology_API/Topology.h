@@ -8,7 +8,6 @@ using namespace std;
 class Topology
 {
 private:
-	enum { MaxCompCount = 200 };
 	string id;
 	vector<ComponentClass> Components;
 public:

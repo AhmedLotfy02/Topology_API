@@ -1,0 +1,5 @@
+<map id="DeviceClass" name="DeviceClass">
+<area shape="rect" id="node1" title=" " alt="" coords="103,5,224,244"/>
+<area shape="rect" id="node2" href="$class_resistance_class.html" title=" " alt="" coords="5,292,153,413"/>
+<area shape="rect" id="node3" href="$class_transistor_class.html" title=" " alt="" coords="177,292,317,413"/>
+</map>

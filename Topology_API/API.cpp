@@ -74,10 +74,13 @@ bool API::writeJSON(string TopologyID)
 	string jsonName;
 	cout << "Please enter the name of the json file you want to create : ";
 	cin >> jsonName;
+	if (jsonName == "") {
+		return false;
+	}
 	cout << endl;
 	json j;
 	ofstream o(jsonName+".json");
-	//o << std::setw(4) << j << std::endl;
+	
 	Topology topo;
 	for (int i = 0; i < TopologyList.size(); i++) {
 		if (TopologyList[i].get_id() == TopologyID) {

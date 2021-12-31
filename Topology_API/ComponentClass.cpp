@@ -66,4 +66,5 @@ void ComponentClass::Print_Component()
 
 ComponentClass::~ComponentClass()
 {
+	
 }

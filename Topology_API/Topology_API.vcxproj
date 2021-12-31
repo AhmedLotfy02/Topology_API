@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="API.h" />
+    <ClInclude Include="API_TestingClass.h" />
     <ClInclude Include="ComponentClass.h" />
     <ClInclude Include="DeviceClass.h" />
     <ClInclude Include="ResistanceClass.h" />
@@ -149,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API.cpp" />
+    <ClCompile Include="API_TestingClass.cpp" />
     <ClCompile Include="AppCLI.cpp" />
     <ClCompile Include="ComponentClass.cpp" />
     <ClCompile Include="DeviceClass.cpp" />
