@@ -79,6 +79,7 @@ void API_TestingClass::Testing_Query2()
 
 void API_TestingClass::Testing_Query3()
 {
+	//The tests are done in sequence
 	vector<Topology> Test;
 	Test = app.queryTopologies();
 	if (Test.size() != 0) {
@@ -87,6 +88,7 @@ void API_TestingClass::Testing_Query3()
 	else {
 		cout << "DIDN'T PASS";
 	}
+
 	
 
 }

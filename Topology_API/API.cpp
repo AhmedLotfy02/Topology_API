@@ -14,8 +14,8 @@ API::API()
 
 bool API::ReadJson(string FileName)
 {
-	//vector<Topology> TopologyList;
 	ifstream file(FileName +".json");
+
 	try
 	{
 		json jf = json::parse(file);
