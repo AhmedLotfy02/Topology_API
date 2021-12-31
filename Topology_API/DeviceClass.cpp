@@ -61,6 +61,7 @@ void DeviceClass::Print_Device()
 {
 	cout << "Device Details : " << endl;
 	cout << "Default: " << this->get_Default() << "		max: " << this->get_max() << "		min:" << this->get_min() << endl;
+	cout << "-------------------------------------------------------------------------" << endl;
 }
 
 DeviceClass::~DeviceClass()
